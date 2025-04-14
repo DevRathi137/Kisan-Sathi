@@ -41,7 +41,7 @@ const Navbar = () => {
         Kisan Sathi
       </div>
 
-      <ul className="flex gap-10 ml-[750px] text-sm font-light">
+      <ul className="flex gap-10 ml-[700px] text-sm font-light">
         <li className="relative group cursor-pointer transition-colors duration-200 font-medium">
           <RouterLink to="/" className="hover:text-yellow-400">
             Home
@@ -57,6 +57,12 @@ const Navbar = () => {
         <li className="relative group cursor-pointer transition-colors duration-200 font-medium">
           <RouterLink to="/team" className="hover:text-yellow-400">
             Our Team
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
+          </RouterLink>
+        </li>
+        <li className="relative group cursor-pointer transition-colors duration-200 font-medium">
+          <RouterLink to="/news" className="hover:text-yellow-400">
+            News
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-yellow-400 transition-all duration-300 group-hover:w-full"></span>
           </RouterLink>
         </li>

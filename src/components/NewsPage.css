@@ -1,0 +1,224 @@
+/* General Styling */
+.news-page {
+    background: #f9f6ef;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem;
+    color: #333;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #5c4033;
+  }
+  
+  /* Weather Section */
+  .weather-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-in;
+  }
+  
+  .weather-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .weather-card {
+    flex: 1 1 200px;
+    background: #eef2f3;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .weather-card .icon {
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    background-size: cover;
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .sun-icon {
+    background-image: url('https://img.icons8.com/color/96/sun--v1.png');
+  }
+  .temp-icon {
+    background-image: url('https://img.icons8.com/color/96/temperature.png');
+  }
+  .humidity-icon {
+    background-image: url('https://img.icons8.com/color/96/humidity.png');
+  }
+  .wind-icon {
+    background-image: url('https://img.icons8.com/color/96/wind.png');
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* News Section */
+  .news-section {
+    margin-bottom: 2rem;
+  }
+  
+  .news-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .news-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  
+  .news-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .news-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .news-content {
+    padding: 1rem;
+  }
+  
+  .news-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2c3e50;
+  }
+  
+  .news-content p {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .news-content a {
+    color: #1e8449;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  /* Video Section */
+  .video-section {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .video-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #2f3e46;
+  }
+  
+  .video-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+  }
+  
+  .video-card {
+    flex: 0 0 auto;
+    width: 320px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    background: #000;
+  }
+  
+  .video-card iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .video-card:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Ministry Section */
+  .ministry-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .ministry-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .ministry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .ministry-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #e6fffa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #0f5132;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .ministry-card:hover {
+    transform: scale(1.02);
+    background: #d1fae5;
+  }
+  
+  .ministry-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+  

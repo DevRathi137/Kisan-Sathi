@@ -35,6 +35,7 @@ import Model from "./components/Model";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
 import OurTeam from "./components/OurTeam";
+import NewsPage from "./components/NewsPage";
 
 const Home = () => (
   <>
@@ -53,6 +54,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/team" element={<OurTeam />} />
+        <Route path="/news" element={<NewsPage />} />
+        {/* Add more routes as needed */}
       </Routes>
       <Footer />
     </Router>
