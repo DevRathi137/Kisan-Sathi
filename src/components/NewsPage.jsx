@@ -1,321 +1,411 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import "./NewsPage.css";
+import { Cloud, Thermometer, Droplets, Wind, ExternalLink } from "lucide-react";
+
+const videoLinks = [
+  { id: "JeU_EYFH1Jk", title: "Modern Farming Techniques" },
+  { id: "6DSxsSbSWeM", title: "Smart Irrigation" },
+  { id: "52nHy0q40QA", title: "Crop Disease Detection" },
+  { id: "ZOqfo3NNVb8", title: "Soil Health Management" },
+];
+
+const ministries = [
+  { name: "Agriculture & Farmers' Welfare", link: "https://agricoop.nic.in/", icon: "🌾" },
+  { name: "Fisheries, Animal Husbandry & Dairying", link: "https://dahd.nic.in/", icon: "🐄" },
+  { name: "Chemicals and Fertilizers", link: "https://chemicals.nic.in/", icon: "🧪" },
+  { name: "Food Processing Industries", link: "https://mofpi.nic.in/", icon: "🥫" },
+  { name: "Environment, Fttps://moef.gov.in/", icon: "🌳" },
+  { name: "Rural Development", link: "https://rural.nic.in/", icon: "🏘️" },
+  { name: "Commerce and Industry", link: "https://commerce.gov.in/", icon: "🏭" },
+  { name: "Panchayati Raj", link: "https://panchayat.gov.in/", icon: "🏡" },
+  { name: "Earth Sciences", link: "https://moes.gov.in/", icon: "🌍" },
+  { name: "Textiles", link: "https://texmin.nic.in/", icon: "🧵" },
+];
+
+const WeatherCard = ({ icon: Icon, label, value, color }) => (
+  <div className="bgl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
+    <div className={`p-3 rounded-xl ${color}`}>
+      <Icon className="w-6 h-6 text-white" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">{label}</p>
+      <p className="text-xl font-bold text-gray-800">{value}</p>
+    </div>
+  </div>
+);
 
 export default function NewsPage() {
   const [weather, setWeather] = useState(null);
   const [news, setNews] = useState([]);
-  const [currentVideo, setCurrentVideo] = useState(0);
-
-  const videoLinks = [
-    "https://www.youtube.com/embed/JeU_EYFH1Jk",
-    "https://www.youtube.com/embed/6DSxsSbSWeM",
-    "https://www.youtube.com/embed/52nHy0q40QA",
-    "https://www.youtube.com/embed/ZOqfo3NNVb8",
-  ];
-
-  // const ministries = [
-  //   {
-  //     name: "Agriculture & Farmers' Welfare",
-  //     link: "https://agricoop.nic.in/",
-  //     icon: "🌾",
-  //   },
-  //   {
-  //     name: "Fisheries, Animal Husbandry and Dairying",
-  //     link: "https://dahd.nic.in/",
-  //     icon: "🐄",
-  //   },
-  //   {
-  //     name: "Chemicals and Fertilizers",
-  //     link: "https://chemicals.nic.in/",
-  //     icon: "🧪",
-  //   },
-  //   {
-  //     name: "Food Processing Industries",
-  //     link: "https://mofpi.nic.in/",
-  //     icon: "🥫",
-  //   },
-  //   {
-  //     name: "Environment, Forest and Climate Change",
-  //     link: "https://moef.gov.in/",
-  //     icon: "🌳",
-  //   },
-  //   { name: "Rural Development", link: "https://rural.nic.in/", icon: "🏘️" },
-  //   {
-  //     name: "Commerce and Industry",
-  //     link: "https://commerce.gov.in/",
-  //     icon: "🏭",
-  //   },
-  //   { name: "Panchayati Raj", link: "https://panchayat.gov.in/", icon: "🏡" },
-  //   { name: "Earth Sciences", link: "https://moes.gov.in/", icon: "🌍" },
-  //   { name: "Textiles", link: "https://texmin.nic.in/", icon: "🧵" },
-  // ];
-
-  const ministries = [
-    {
-      name: "Agriculture & Farmers' Welfare",
-      link: "https://agricoop.nic.in/",
-    },
-    {
-      name: "Fisheries, Animal Husbandry and Dairying",
-      link: "https://dahd.nic.in/",
-    },
-    {
-      name: "Chemicals and Fertilizers",
-      link: "https://chemicals.nic.in/",
-    },
-    {
-      name: "Food Processing Industries",
-      link: "https://mofpi.nic.in/",
-    },
-    {
-      name: "Environment, Forest and Climate Change",
-      link: "https://moef.gov.in/",
-    },
-    { name: "Rural Development", link: "https://rural.nic.in/" },
-    { name: "Commerce and Industry", link: "https://commerce.gov.in/" },
-    { name: "Panchayati Raj", link: "https://panchayat.gov.in/" },
-    { name: "Earth Sciences", link: "https://moes.gov.in/" },
-    { name: "Textiles", link: "https://texmin.nic.in/" },
-  ];
-
-  const fadeUp = {
-    initial: { opacity: 0, y: 50 },
-    animate: { opacity: 1, y: 0 },
-  };
-
-  const handlePrev = () => {
-    setCurrentVideo((prev) => (prev === 0 ? videoLinks.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentVideo((prev) => (prev === videoLinks.length - 1 ? 0 : prev + 1));
-  };
 
   useEffect(() => {
     axios
-      .get(
-        "https://api.openweathermap.org/data/2.5/weather?q=Bhopal&appid=***REMOVED***&units=metric"
-      )
-      .then((res) => setWeather(res.data));
+      .get("https://api.openweathermap.org/data/2.5/weather?q=Bhopal&appid=***REMOVED***&units=metric")
+      .then((res) => setWeather(res.data))
+      .catch(() => {});
 
     axios
-      .get(
-        "https://newsapi.org/v2/everything?q=indian%20farmers&apiKey=***REMOVED***&pageSize=4&sortBy=publishedAt&language=en"
-      )
-      .then((res) => setNews(res.data.articles));
+      .get("https://newsapi.org/v2/everything?q=indian%20farmers&apiKey=***REMOVED***&pageSize=4&sortBy=publishedAt&language=en")
+      .then((res) => setNews(res.data.articles || []))
+      .catch(() => {});
   }, []);
 
   return (
-    <div className="news-page">
-      <motion.h1
-              className="text-5xl font-black text-center text-green-900 mb-16"
-              initial="initial"
-              whileInView="animate"
-              variants={fadeUp}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-      >
-        KisanSathi <span className="text-green-600">News & Weather</span>
-      
-      </motion.h1>
+    <div className="mito-white">
+      {/* Page Header */}
+      <div className="bg-[#2f4632] py-20 px-6 text-center">
+        <span className="inline-block bg-green-500/20 text-green-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-green-500/30">
+          Stay Informed
+        </span>
+        <h1 className="text-5xl font-black text-white mb-3 tracking-tight">
+          News & <span className="text-green-400">Weather</span>
+        </h1>
+        <p className="text-white/60 text-lg max-w-xl mx-auto">
+          Latest agricultural news, live weather updates, and farming resources — all in one place.
+        </p>
+      </div>
 
-      {/* WEATHER SECTION */}
-      <div className="weather-section">
-        <h2 className="font-bold">Weather Update - Bhopal</h2>
-        {weather ? (
-          <div className="weather-grid">
-            <div className="weather-card sun">
-              <div className="icon sun-icon"></div>
-              <p>{weather.weather[0].main}</p>
-            </div>
-            <div className="weather-card">
-              <div className="icon temp-icon"></div>
-              <p>{weather.main.temp}°C</p>
-            </div>
-            <div className="weather-card">
-              <div className="icon humidity-icon"></div>
-              <p>Humidity: {weather.main.humidity}%</p>
-            </div>
-            <div className="weather-card">
-              <div className="icon wind-icon"></div>
-              <p>Wind: {weather.wind.speed} m/s</p>
-            </div>
+      <div className="max-w-7xl mx-auto px-6 py-16 space-y-20">
+        {/* Weather Section */}
+        <section>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Weather Update</h2>
+            <p className="text-gray-500">Current conditions in Bhopal, MP</p>
           </div>
-        ) : (
-          <p>Loading weather...</p>
-        )}
-      </div>
-
-      {/* NEWS SECTION */}
-      <div className="news-section">
-        <h2 className="text-4xl font-extrabold text-green-900 mb-4 text-center tracking-tight py-5">
-          Latest Farmer News
-        </h2>
-
-        <div className="news-cards">
-          {news.length > 0 ? (
-            news.map((article, index) => (
-              <div className="news-card" key={index}>
-                <img src={article.urlToImage} alt="news" />
-                <div className="news-content">
-                  <h3>{article.title}</h3>
-                  <p>{article.description}</p>
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Read More
-                  </a>
-                </div>
-              </div>
-            ))
+          {weather ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              <WeatherCard
+                icon={Cloud}
+                label="Condition"
+                value={weather.weather[0].main}
+                color="bg-blue-400"
+              />
+              <WeatherCard
+                icon={Thermometer}
+                label="Temperature"
+                value={`${weather.main.temp}°C`}
+                color="bg-orange-400"
+              />
+              <WeatherCard
+ts}
+                label="Humidity"
+                value={`${weather.main.humidity}%`}
+                color="bg-cyan-500"
+              />
+              <WeatherCard
+                icon={Wind}
+                label="Wind Speed"
+                value={`${weather.wind.speed} m/s`}
+                color="bg-green-500"
+              />
+            </div>
           ) : (
-            <p>Loading news...</p>
+            <div className="text-center text-gray-400 py-8">Loading weather data...</div>
           )}
-        </div>
-      </div>
+        </section>
 
-      {/* YOUTUBE VIDEO */}
-      {/* <div className="video-section">
-        <h2>Featured Videos</h2>
-        <div className="video-carousel">
-          <button className="carousel-btn prev" onClick={handlePrev}>‹</button>
+        {n */}
+        <section>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Latest Farmer News</h2>
+            <p className="text-gray-500">Curated news from across India's agricultural sector</p>
+          </div>
+          {news.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {news.map((article, i) => (
+                <motion.a
+                  key={i}
+       le.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                >
+                  {article.urlToImage && (
+                    <div className="h-44 overflow-hidden">
+                      <img
+                        src={article.urlToImage}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="text-sm font-bold texer:text-green-700 transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-2 mb-3">{article.description}</p>
+                    <span className="inline-flex items-center gap-1 text-xs text-green-600 font-semibold">
+                      Read More <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          ) 
+            <div className="text-center text-gray-400 py-8">Loading news...</div>
+          )}
+        </section>
 
-          <div className="video-track">
-            {videoLinks.map((link, index) => (
-              <div
-                key={index}
-                className={`video-slide ${index === currentVideo ? "active" : "inactive"}`}
+        {/* Videos Section */}
+        <section>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Featured Videos</h2>
+            <p className="text-gray-500">Learn modern farming techniques from experts</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {videoLinks.map((v, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-black"
               >
-                <iframe
-                  src={link}
-                  title={`YouTube Video ${index}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
+                <div className="aspect-video">
+                  <iframe
+                    sr}`}
+                    title={v.title}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-3 bg-white">
+                  <p className="text-xs font-semibold text-gray-700 truncate">{v.title}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
+        </section>
 
-          <button className="carousel-btn next" onClick={handleNext}>›</button>
-        </div>
-      </div> */}
-      <div className="video-section">
-        <h2 className="text-4xl font-extrabold text-green-800 mb-4 text-center tracking-tight">
-          Featured Videos
-        </h2>
-        <div className="video-carousel">
-          <div className="video-card">
-            <iframe
-              src="https://www.youtube.com/embed/JeU_EYFH1Jk"
-              allowFullScreen
-              title="video1"
-            ></iframe>
+        {/* Ministries Section */}
+        <section className="pb-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Government Resources</h2>
+            <p className="text-gray-500">Ministries supporting Indian farmers</p>
           </div>
-          <div className="video-card">
-            <iframe
-              src="https://www.youtube.com/embed/JeU_EYFH1Jk"
-              allowFullScreen
-              title="video2"
-            ></iframe>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {ministries.map((m, i) => (
+              <motion.a
+                key={i}
+                href={m.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                viewport={{ once: true }}
+                className="bg-white border border-green-100 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-green-300 transition-all text-center group"
+              >
+                <div className="text-3xl mb-2">{m.icon}</div>
+                <p className="text-xs font-medium text-gray-700 group-hover:text-green-700 transition-colors leading-snug">
+                  {m.name}
+                </p>
+              </motion.a>
+            ))}
           </div>
-          <div className="video-card">
-            <iframe
-              src="https://www.youtube.com/embed/JeU_EYFH1Jk"
-              allowFullScreen
-              title="video3"
-            ></iframe>
-          </div>
-          <div className="video-card">
-            <iframe
-              src="https://www.youtube.com/embed/JeU_EYFH1Jk"
-              allowFullScreen
-              title="video4"
-            ></iframe>
-          </div>
-          <div className="video-card">
-            <iframe
-              src="https://www.youtube.com/embed/JeU_EYFH1Jk"
-              allowFullScreen
-              title="video4"
-            ></iframe>
-          </div>
-        </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+const videoLinks = [
+  { id: "JeU_EYFH1Jk", title: "Modern Farming Techniques" },
+  { id: "6DSxsSbSWeM", title: "Smart Irrigation" },
+  { id: "52nHy0q40QA", title: "Crop Disease Detection" },
+  { id: "ZOqfo3NNVb8", title: "Soil Health Management" },
+];
+
+const ministries = [
+  { name: "Agriculture & Farmers' Welfare", link: "https://agricoop.nic.in/", icon: "🌾" },
+  { name: "Fisheries, Animal Husbandry & Dairying", link: "https://dahd.nic.in/", icon: "🐄" },
+  { name: "Chemicals and Fertilizers", link: "https://chemicals.nic.in/", icon: "🧪" },
+  { name: "Food Processing Industries", link: "https://mofpi.nic.in/", icon: "🥫" },
+  { name: "Environment, Forest & Climate Change", link: "https://moef.gov.in/", icon: "🌳" },
+  { name: "Rural Development", link: "https://rural.nic.in/", icon: "🏘️" },
+  { name: "Commerce and Industry", link: "https://commerce.gov.in/", icon: "🏭" },
+  { name: "Panchayati Raj", link: "https://panchayat.gov.in/", icon: "🏡" },
+  { name: "Earth Sciences", link: "https://moes.gov.in/", icon: "🌍" },
+  { name: "Textiles", link: "https://texmin.nic.in/", icon: "🧵" },
+];
+
+const WeatherCard = ({ icon: Icon, label, value, color }) => (
+  <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
+    <div className={`p-3 rounded-xl ${color}`}>
+      <Icon className="w-6 h-6 text-white" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">{label}</p>
+      <p className="text-xl font-bold text-gray-800">{value}</p>
+    </div>
+  </div>
+);
+
+export default function NewsPage() {
+  const [weather, setWeather] = useState(null);
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://api.openweathermap.org/data/2.5/weather?q=Bhopal&appid=***REMOVED***&units=metric")
+      .then((res) => setWeather(res.data))
+      .catch(() => {});
+
+    axios
+      .get("https://newsapi.org/v2/everything?q=indian%20farmers&apiKey=***REMOVED***&pageSize=4&sortBy=publishedAt&language=en")
+      .then((res) => setNews(res.data.articles || []))
+      .catch(() => {});
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      {/* Page Header */}
+      <div className="bg-[#2f4632] py-20 px-6 text-center">
+        <span className="inline-block bg-green-500/20 text-green-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-green-500/30">
+          Stay Informed
+        </span>
+        <h1 className="text-5xl font-black text-white mb-3 tracking-tight">
+          News & <span className="text-green-400">Weather</span>
+        </h1>
+        <p className="text-white/60 text-lg max-w-xl mx-auto">
+          Latest agricultural news, live weather updates, and farming resources — all in one place.
+        </p>
       </div>
 
-      {/* MINISTRY LINKS */}
-      {/* <div className="ministry-section">
-        <h2 className="text-4xl font-extrabold text-green-700 mb-4 text-center tracking-tight">Ministries Supporting Indian Farmers</h2>
-        <div className="ministry-grid redesigned">
-          {[
-            {
-              name: "Agriculture & Farmers' Welfare",
-              link: "https://agricoop.nic.in/",
-            },
-            {
-              name: "Fisheries, Animal Husbandry and Dairying",
-              link: "https://dahd.nic.in/",
-            },
-            {
-              name: "Chemicals and Fertilizers",
-              link: "https://chemicals.nic.in/",
-            },
-            {
-              name: "Food Processing Industries",
-              link: "https://mofpi.nic.in/",
-            },
-            {
-              name: "Environment, Forest and Climate Change",
-              link: "https://moef.gov.in/",
-            },
-            { name: "Rural Development", link: "https://rural.nic.in/" },
-            { name: "Commerce and Industry", link: "https://commerce.gov.in/" },
-            { name: "Panchayati Raj", link: "https://panchayat.gov.in/" },
-            { name: "Earth Sciences", link: "https://moes.gov.in/" },
-            { name: "Textiles", link: "https://texmin.nic.in/" },
-          ].map((ministry, index) => (
-            <a
-              key={index}
-              href={ministry.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ministry-card redesigned"
-            >
-              <div className="ministry-icon">🏛️</div>
-              <div className="ministry-name">{ministry.name}</div>
-            </a>
-          ))}
-        </div>
-      </div> */}
+      <div className="max-w-7xl mx-auto px-6 py-16 space-y-20">
+        {/* Weather Section */}
+        <section>
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Weather Update</h2>
+            <p className="text-gray-500">Current conditions in Bhopal, MP</p>
+          </div>
+          {weather ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              <WeatherCard icon={Cloud} label="Condition" value={weather.weather[0].main} color="bg-blue-400" />
+              <WeatherCard icon={Thermometer} label="Temperature" value={`${weather.main.temp}°C`} color="bg-orange-400" />
+              <WeatherCard icon={Droplets} label="Humidity" value={`${weather.main.humidity}%`} color="bg-cyan-500" />
+              <WeatherCard icon={Wind} label="Wind Speed" value={`${weather.wind.speed} m/s`} color="bg-green-500" />
+            </div>
+          ) : (
+            <div className="text-center text-gray-400 py-8">Loading weather data...</div>
+          )}
+        </section>
 
-      <div className="mb-20">
-        <h2 className="text-3xl font-bold text-green-800 text-center mb-10">
-          Ministries Supporting Indian Farmers
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {ministries.map((ministry, index) => (
-            <motion.a
-              key={index}
-              href={ministry.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow text-center flex flex-col items-center"
-            >
-              <div className="text-3xl mb-4">🏛️</div>
-              <h3 className="text-black  text-base text-center">
-                {ministry.name}
-              </h3>
-            </motion.a>
-          ))}
-        </div>
+        {/* News Section */}
+        <section>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Latest Farmer News</h2>
+            <p className="text-gray-500">Curated news from across India's agricultural sector</p>
+          </div>
+          {news.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {news.map((article, i) => (
+                <motion.a
+                  key={i}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                >
+                  {article.urlToImage && (
+                    <div className="h-44 overflow-hidden">
+                      <img
+                        src={article.urlToImage}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className="text-sm font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-green-700 transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 line-clamp-2 mb-3">{article.description}</p>
+                    <span className="inline-flex items-center gap-1 text-xs text-green-600 font-semibold">
+                      Read More <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-gray-400 py-8">Loading news...</div>
+          )}
+        </section>
+
+        {/* Videos Section */}
+        <section>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Featured Videos</h2>
+            <p className="text-gray-500">Learn modern farming techniques from experts</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {videoLinks.map((v, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-black"
+              >
+                <div className="aspect-video">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${v.id}`}
+                    title={v.title}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-3 bg-white">
+                  <p className="text-xs font-semibold text-gray-700 truncate">{v.title}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Ministries Section */}
+        <section className="pb-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-green-900 mb-2">Government Resources</h2>
+            <p className="text-gray-500">Ministries supporting Indian farmers</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {ministries.map((m, i) => (
+              <motion.a
+                key={i}
+                href={m.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                viewport={{ once: true }}
+                className="bg-white border border-green-100 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-green-300 transition-all text-center group"
+              >
+                <div className="text-3xl mb-2">{m.icon}</div>
+                <p className="text-xs font-medium text-gray-700 group-hover:text-green-700 transition-colors leading-snug">
+                  {m.name}
+                </p>
+              </motion.a>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

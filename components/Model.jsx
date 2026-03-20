@@ -1,58 +1,45 @@
+"use client";
+
 import React from "react";
 import { Element } from "react-scroll";
 import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLang } from "@/context/LanguageContext";
+import t from "@/context/translations";
 
-const tools = [
-  {
-    title: "Crop Recommendation",
-    description: "Get AI-powered crop suggestions based on soil nutrients, pH, and climate conditions.",
-    image: "/Crop.png",
-    path: "http://localhost:8501",
-    tag: "ML Model",
-  },
-  {
-    title: "Water Management",
-    description: "Optimize irrigation schedules and reduce water waste with smart predictions.",
-    image: "/wm.jpg",
-    path: "http://localhost:8505",
-    tag: "Optimization",
-  },
-  {
-    title: "Rainfall Prediction",
-    description: "Forecast rainfall patterns to plan your farming activities ahead of time.",
-    image: "/rain_India.jpg",
-    path: "http://localhost:8504",
-    tag: "Forecasting",
-  },
-  {
-    title: "Fertilizer Recommendation",
-    description: "Receive precise fertilizer guidance to maximize yield while protecting the soil.",
-    image: "/fr.jpg",
-    path: "http://localhost:8502",
-    tag: "Precision Farming",
-  },
+const toolImages = ["/Crop.png", "/wm.jpg", "/rain_India.jpg", "/fr.jpg"];
+const toolPaths = [
+  "http://localhost:8501",
+  "http://localhost:8505",
+  "http://localhost:8504",
+  "http://localhost:8502",
 ];
 
 const Model = () => {
+  const { lang } = useLang();
+  const tx = t[lang];
+
+  const tools = [
+    { title: tx.tool1_title, desc: tx.tool1_desc, tag: tx.tool1_tag, image: toolImages[0], path: toolPaths[0] },
+    { title: tx.tool2_title, desc: tx.tool2_desc, tag: tx.tool2_tag, image: toolImages[1], path: toolPaths[1] },
+    { title: tx.tool3_title, desc: tx.tool3_desc, tag: tx.tool3_tag, image: toolImages[2], path: toolPaths[2] },
+    { title: tx.tool4_title, desc: tx.tool4_desc, tag: tx.tool4_tag, image: toolImages[3], path: toolPaths[3] },
+  ];
+
   return (
     <Element name="toolsSection">
       <section className="bg-gradient-to-b from-[#1a2e1c] to-[#2f4632] py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-16">
             <span className="inline-block bg-green-500/20 text-green-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-green-500/30">
-              Powered by AI
+              {tx.tools_badge}
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-              Smart Farming Tools
+              {tx.tools_title}
             </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto">
-              Four intelligent models built to help you make data-driven decisions at every stage of farming.
-            </p>
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">{tx.tools_desc}</p>
           </div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {tools.map((tool, index) => (
               <motion.a
@@ -66,31 +53,18 @@ const Model = () => {
                 viewport={{ once: true }}
                 className="group relative bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-green-500/50 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-green-900/30"
               >
-                {/* Image */}
                 <div className="h-52 overflow-hidden">
-                  <img
-                    src={tool.image}
-                    alt={tool.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+                  <img src={tool.image} alt={tool.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 h-52 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
-
-                {/* Tag */}
                 <span className="absolute top-4 left-4 bg-green-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm">
                   {tool.tag}
                 </span>
-
-                {/* Content */}
                 <div className="p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
-                        {tool.title}
-                      </h3>
-                      <p className="text-white/60 text-sm leading-relaxed">
-                        {tool.description}
-                      </p>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">{tool.title}</h3>
+                      <p className="text-white/60 text-sm leading-relaxed">{tool.desc}</p>
                     </div>
                     <div className="shrink-0 bg-green-500/20 group-hover:bg-green-500 p-2.5 rounded-xl transition-colors duration-300">
                       <ExternalLink className="w-4 h-4 text-green-400 group-hover:text-white transition-colors" />
