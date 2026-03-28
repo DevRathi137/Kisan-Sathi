@@ -18,15 +18,10 @@ const AboutUs = () => {
     { icon: <Tractor className="w-6 h-6 text-green-500" />, title: tx.feat4_title, desc: tx.feat4_desc },
   ];
 
-  const testimonials = [
-    { name: tx.t1_name, village: tx.t1_village, text: tx.t1_text },
-    { name: tx.t2_name, village: tx.t2_village, text: tx.t2_text },
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       <div className="relative bg-[#2f4632] py-24 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('/farm0.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=1920&q=85')] bg-cover bg-center" />
         <div className="relative z-10 max-w-3xl mx-auto">
           <span className="inline-block bg-green-500/20 text-green-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-green-500/30">
             {tx.about_badge}
@@ -47,7 +42,7 @@ const AboutUs = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <img src="/farm0.jpg" alt="Farming" className="rounded-3xl shadow-2xl w-full h-auto object-cover" />
+            <img src="/farm0.jpg" alt="Agriculture field" className="rounded-3xl shadow-2xl w-full h-auto object-cover" />
             <div className="absolute -bottom-6 -right-6 bg-green-500 text-white rounded-2xl px-6 py-4 shadow-xl hidden md:block">
               <div className="text-3xl font-black">4+</div>
               <div className="text-sm font-medium opacity-90">{tx.about_stat_label}</div>
@@ -108,31 +103,10 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-black text-green-900 mb-3">{tx.testimonials_title}</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">{tx.testimonials_sub}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                viewport={{ once: true }}
-                className="bg-white border border-green-100 p-8 rounded-3xl shadow-sm relative"
-              >
-                <div className="text-5xl text-green-200 font-serif absolute top-4 left-6 leading-none select-none">"</div>
-                <p className="text-gray-700 italic leading-relaxed mb-6 pt-4">{t.text}</p>
-                <div>
-                  <div className="font-bold text-green-700">{t.name}</div>
-                  <div className="text-sm text-gray-400">{t.village}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        {/* Mission Statement — replaces fake testimonials */}
+        <div className="bg-[#2f4632] rounded-3xl p-12 text-center max-w-4xl mx-auto">
+          <h2 className="text-3xl font-black text-white mb-4">{tx.mission_title}</h2>
+          <p className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">{tx.mission_text}</p>
         </div>
       </div>
     </div>

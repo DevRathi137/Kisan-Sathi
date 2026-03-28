@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { RegionProvider } from "@/context/RegionContext";
 
 export const metadata = {
   metadataBase: new URL("https://kisansathi.vercel.app"),
@@ -10,7 +11,7 @@ export const metadata = {
     template: "%s | KisanSathi",
   },
   description:
-    "KisanSathi empowers Indian farmers with AI-driven tools for crop recommendation, water management, rainfall prediction, and fertilizer guidance.",
+    "KisanSathi empowers farmers worldwide with AI-driven tools for crop recommendation, water management, rainfall prediction, and fertilizer guidance.",
   keywords: [
     "smart farming",
     "AI agriculture",
@@ -21,7 +22,7 @@ export const metadata = {
     "fertilizer recommendation",
     "water management",
     "precision farming",
-    "Madhya Pradesh farming",
+    "sustainable agriculture",
   ],
   authors: [{ name: "KisanSathi" }],
   creator: "KisanSathi",
@@ -32,13 +33,13 @@ export const metadata = {
     siteName: "KisanSathi",
     title: "KisanSathi — AI-Powered Smart Agriculture",
     description:
-      "Empowering Indian farmers with AI-driven tools for smarter, sustainable agriculture.",
+      "Empowering farmers worldwide with AI-driven tools for smarter, sustainable agriculture.",
     images: [{ url: "/Hero.png", width: 1200, height: 630, alt: "KisanSathi" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "KisanSathi — AI-Powered Smart Agriculture",
-    description: "Empowering Indian farmers with AI-driven tools.",
+    description: "Empowering farmers worldwide with AI-driven tools.",
     images: ["/Hero.png"],
   },
   robots: {
@@ -58,9 +59,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <LanguageProvider>
-          <Navbar />
-          {children}
-          <Footer />
+          <RegionProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </RegionProvider>
         </LanguageProvider>
       </body>
     </html>

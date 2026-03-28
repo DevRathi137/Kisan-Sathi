@@ -16,8 +16,7 @@ const t = {
     hero_cta_primary: "Explore Tools",
     hero_cta_secondary: "Learn More",
     hero_stat1_label: "AI Models",
-    hero_stat2_label: "Farmers Helped",
-    hero_stat3_label: "Accuracy",
+    hero_stat3_label: "Model Accuracy",
 
     // Model / Tools
     tools_badge: "Powered by AI",
@@ -67,6 +66,8 @@ const t = {
     t2_name: "Sunita Devi",
     t2_village: "Sehore, MP",
     t2_text: "The app helped me choose the right crop for my field. Very useful.",
+    mission_title: "Our Mission",
+    mission_text: "KisanSathi exists to make precision agriculture accessible to every farmer — regardless of location, language, or technical background. We believe data-driven farming should not be a privilege.",
 
     // News
     news_badge: "Stay Informed",
@@ -87,11 +88,11 @@ const t = {
     videos_title: "Featured Videos",
     videos_sub: "Learn modern farming techniques from experts",
     ministries_title: "Government Resources",
-    ministries_sub: "Ministries supporting Indian farmers",
+    ministries_sub: "Official government resources for farmers in your region",
 
     // Footer
     footer_desc: "Empowering Indian farmers with AI-driven tools for smarter, more sustainable agriculture.",
-    footer_fact: "🌾 Madhya Pradesh is the largest producer of pulses in India — contributing over 30% to the country's total pulse production.",
+    footer_fact: "The future of farming is not just in the soil — it is in the data. AI is giving farmers the power to grow smarter, not just harder.",
     footer_links_title: "Quick Links",
     footer_contact_title: "Contact Us",
     footer_name_placeholder: "Your name",
@@ -120,8 +121,7 @@ const t = {
     hero_cta_primary: "टूल्स देखें",
     hero_cta_secondary: "और जानें",
     hero_stat1_label: "AI मॉडल",
-    hero_stat2_label: "किसान लाभान्वित",
-    hero_stat3_label: "सटीकता",
+    hero_stat3_label: "मॉडल सटीकता",
 
     // Model / Tools
     tools_badge: "AI द्वारा संचालित",
@@ -171,6 +171,8 @@ const t = {
     t2_name: "सुनीता देवी",
     t2_village: "सीहोर, MP",
     t2_text: "मुझे ऐप की मदद से अपने खेत के लिए सही फसल चुनने में बहुत मदद मिली।",
+    mission_title: "हमारा उद्देश्य",
+    mission_text: "किसानसाथी का लक्ष्य है कि सटीक कृषि हर किसान तक पहुंचे — चाहे वह कहीं भी हो, किसी भी भाषा में बोलता हो, या तकनीक से कितना भी परिचित हो। हमारा मानना है कि डेटा-आधारित खेती किसी विशेषाधिकार की बात नहीं होनी चाहिए।",
 
     // News
     news_badge: "अपडेट रहें",
@@ -191,11 +193,11 @@ const t = {
     videos_title: "विशेष वीडियो",
     videos_sub: "विशेषज्ञों से आधुनिक खेती तकनीक सीखें",
     ministries_title: "सरकारी संसाधन",
-    ministries_sub: "भारतीय किसानों का समर्थन करने वाले मंत्रालय",
+    ministries_sub: "आपके क्षेत्र के किसानों के लिए सरकारी संसाधन",
 
     // Footer
     footer_desc: "AI-संचालित टूल्स से भारतीय किसानों को स्मार्ट और टिकाऊ खेती के लिए सशक्त बनाना।",
-    footer_fact: "🌾 मध्य प्रदेश भारत में दलहन का सबसे बड़ा उत्पादक है — देश के कुल दलहन उत्पादन में 30% से अधिक योगदान।",
+    footer_fact: "खेती का भविष्य केवल मिट्टी में नहीं — डेटा में है। AI किसानों को सिर्फ मेहनत नहीं, बल्कि स्मार्ट तरीके से खेती करने की शक्ति दे रहा है।",
     footer_links_title: "त्वरित लिंक",
     footer_contact_title: "संपर्क करें",
     footer_name_placeholder: "आपका नाम",

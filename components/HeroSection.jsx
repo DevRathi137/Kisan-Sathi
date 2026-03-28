@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
@@ -8,24 +8,88 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import t from "@/context/translations";
 
+const SLIDES = [
+  // Lush green rice paddy terraces — dramatic, cinematic
+  "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=1920&q=85",
+  // Indian farmer working in field — authentic, human
+  "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=1920&q=85",
+  // Aerial view of green crop rows — scale and precision
+  "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1920&q=85",
+  // Golden wheat field at sunset — warm, aspirational
+  "https://images.unsplash.com/photo-1543257580-7269da773bf5?w=1920&q=85",
+  // Close-up of hands holding soil/seeds — grounded, emotional
+  "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1920&q=85",
+];
+
+const INTERVAL = 5000;
+
 const HeroSection = () => {
   const { lang } = useLang();
   const tx = t[lang];
+  const [current, setCurrent] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((c) => (c + 1) % SLIDES.length);
+    }, INTERVAL);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const stats = [
-    { value: "4+",   label: tx.hero_stat1_label },
-    { value: "10K+", label: tx.hero_stat2_label },
-    { value: "98%",  label: tx.hero_stat3_label },
+    { value: "4",   label: tx.hero_stat1_label },
+    { value: "99%", label: tx.hero_stat3_label },
   ];
 
-  return (
-    <div
-      className="relative w-full min-h-screen flex flex-col justify-center items-center text-white text-center px-6 bg-cover bg-center"
-      style={{ backgroundImage: `url("/Hero.png")` }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" />
+  const parallaxOffset = scrollY * 0.4;
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+  return (
+    <div className="relative w-full min-h-screen flex flex-col justify-center items-center text-white text-center px-6 overflow-hidden">
+
+      {/* Slide layers */}
+      {SLIDES.map((url, i) => (
+        <div
+          key={i}
+          aria-hidden="true"
+          className="absolute inset-0 bg-cover bg-center will-change-transform"
+          style={{
+            backgroundImage: `url("${url}")`,
+            opacity: i === current ? 1 : 0,
+            transition: "opacity 1.2s ease-in-out",
+            transform: `translateY(${parallaxOffset}px) scale(1.15)`,
+            zIndex: 0,
+            animation: i === current ? "kenburns 6s ease-out forwards" : "none",
+          }}
+        />
+      ))}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/75 z-10" />
+
+      {/* Dot indicators */}
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+            className={`rounded-full transition-all duration-500 ${
+              i === current
+                ? "w-6 h-2 bg-green-400"
+                : "w-2 h-2 bg-white/30 hover:bg-white/60"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="relative z-20 max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-400/40 text-green-300 text-sm font-medium px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
           {tx.hero_badge}
@@ -91,10 +155,17 @@ const HeroSection = () => {
         smooth
         duration={600}
         offset={-70}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 cursor-pointer animate-bounce text-white/50 hover:text-white transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 cursor-pointer animate-bounce text-white/50 hover:text-white transition-colors"
       >
         <ChevronDown className="w-7 h-7" />
       </ScrollLink>
+
+      <style>{`
+        @keyframes kenburns {
+          from { transform: translateY(${parallaxOffset}px) scale(1.15); }
+          to   { transform: translateY(${parallaxOffset}px) scale(1.22); }
+        }
+      `}</style>
     </div>
   );
 };

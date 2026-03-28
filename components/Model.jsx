@@ -7,7 +7,12 @@ import { motion } from "framer-motion";
 import { useLang } from "@/context/LanguageContext";
 import t from "@/context/translations";
 
-const toolImages = ["/Crop.png", "/wm.jpg", "/rain_India.jpg", "/fr.jpg"];
+const toolImages = [
+  "/Crop.png",
+  "/Water.png",
+  "/Rainfall.png",
+  "/Fertilizer.png",
+];
 const toolPaths = [
   "http://localhost:8501",
   "http://localhost:8505",
