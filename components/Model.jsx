@@ -14,7 +14,7 @@ const toolImages = [
   "/Fertilizer.png",
 ];
 const toolPaths = [
-  "http://localhost:8501",
+  "https://kisan-sathi.streamlit.app",
   "http://localhost:8505",
   "http://localhost:8504",
   "http://localhost:8502",
