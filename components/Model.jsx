@@ -15,7 +15,7 @@ const toolImages = [
 ];
 const toolPaths = [
   "https://kisan-sathi.streamlit.app",
-  "http://localhost:8505",
+  "https://kisan-sathi-water.streamlit.app",
   "http://localhost:8504",
   "http://localhost:8502",
 ];
