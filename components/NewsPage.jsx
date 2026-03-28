@@ -87,18 +87,47 @@ export default function NewsPage() {
   const [news, setNews]       = useState([]);
   const [weatherLoading, setWeatherLoading] = useState(true);
   const [newsLoading, setNewsLoading]       = useState(true);
+  const [detectedCity, setDetectedCity]     = useState(null);
   const { lang } = useLang();
   const { region, regionData } = useRegion();
   const tx = t[lang];
 
+  // Auto-detect location on first load, fall back to region city
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          setWeatherLoading(true);
+          fetch(`/api/weather?lat=${latitude}&lon=${longitude}`)
+            .then((r) => r.json())
+            .then((data) => {
+              if (!data.error) {
+                setWeather(data);
+                setDetectedCity(data.name);
+              } else {
+                fetchByRegionCity();
+              }
+            })
+            .catch(fetchByRegionCity)
+            .finally(() => setWeatherLoading(false));
+        },
+        () => fetchByRegionCity(), // denied — use region city
+        { timeout: 5000 }
+      );
+    } else {
+      fetchByRegionCity();
+    }
+  }, [region]); // re-run when region changes
+
+  function fetchByRegionCity() {
     setWeatherLoading(true);
     fetch(`/api/weather?city=${encodeURIComponent(regionData.city)}`)
       .then((r) => r.json())
-      .then((data) => { setWeather(data.error ? null : data); })
+      .then((data) => { setWeather(data.error ? null : data); setDetectedCity(null); })
       .catch(() => setWeather(null))
       .finally(() => setWeatherLoading(false));
-  }, [region, regionData.city]);
+  }
 
   useEffect(() => {
     setNewsLoading(true);
@@ -140,7 +169,7 @@ export default function NewsPage() {
         <section>
           <div className="text-center mb-8">
             <h2 className="text-3xl font-black text-green-900 mb-2">{tx.weather_title}</h2>
-            <p className="text-gray-500">{regionData.city}</p>
+            <p className="text-gray-500">{detectedCity || regionData.city}</p>
           </div>
           {weatherLoading ? (
             <div className="text-center text-gray-400 py-8">{tx.weather_loading}</div>
