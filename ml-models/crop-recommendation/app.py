@@ -121,12 +121,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Load model ────────────────────────────────────────────────
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 @st.cache_resource
 def load_model():
-    if not os.path.exists("crop_model.pkl"):
+    model_path = os.path.join(BASE_DIR, "crop_model.pkl")
+    encoder_path = os.path.join(BASE_DIR, "label_encoder.pkl")
+    if not os.path.exists(model_path):
         st.error("Model not found. Please run train.py first.")
         st.stop()
-    return joblib.load("crop_model.pkl"), joblib.load("label_encoder.pkl")
+    return joblib.load(model_path), joblib.load(encoder_path)
 
 model, le = load_model()
 
