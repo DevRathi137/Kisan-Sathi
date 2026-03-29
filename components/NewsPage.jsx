@@ -6,6 +6,7 @@ import { Cloud, Thermometer, Droplets, Wind, ExternalLink } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { useRegion } from "@/context/RegionContext";
 import t from "@/context/translations";
+import MandiWidget from "@/components/MandiWidget";
 
 const REGION_VIDEOS = {
   india: [
@@ -191,6 +192,23 @@ export default function NewsPage() {
             <div className="text-center text-gray-400 py-8">Weather data unavailable.</div>
           )}
         </section>
+
+        {/* Mandi Prices — only show for India region */}
+        {region === "india" && (
+          <section>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-black text-green-900 mb-2">
+                {lang === "hi" ? "मंडी भाव" : "Mandi Prices"}
+              </h2>
+              <p className="text-gray-500">
+                {lang === "hi"
+                  ? "AGMARKNET से लाइव थोक बाजार भाव"
+                  : "Live wholesale market rates from AGMARKNET"}
+              </p>
+            </div>
+            <MandiWidget />
+          </section>
+        )}
 
         {/* News */}
         <section>
