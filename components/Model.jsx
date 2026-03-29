@@ -17,10 +17,10 @@ const toolImages = [
 
 // internal: true = Next.js Link (same site), false = external tab
 const toolPaths = [
-  { url: "https://kisan-sathi.streamlit.app",       internal: false },
-  { url: "https://kisan-sathi-water.streamlit.app", internal: false },
-  { url: "/weather",                                 internal: true  },
-  { url: "http://localhost:8502",                    internal: false },
+  { url: "https://kisan-sathi.streamlit.app",                          internal: false },
+  { url: "https://kisan-sathi-water.streamlit.app",                    internal: false },
+  { url: "/weather",                                                    internal: true  },
+  { url: "https://kisan-sathi-fertilizer-recommendation.streamlit.app", internal: false },
 ];
 
 const cardClass = "group relative bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-green-500/50 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-green-900/30";
