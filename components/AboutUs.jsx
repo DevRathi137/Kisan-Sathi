@@ -56,7 +56,9 @@ const AboutUs = () => {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <h2 className="text-4xl font-black text-green-900 tracking-tight">{tx.about_h2}</h2>
+            <div className="border-l-4 border-green-500 pl-5">
+              <h2 className="text-4xl font-black text-green-900 tracking-tight">{tx.about_h2}</h2>
+            </div>
             <p className="text-gray-600 text-lg leading-relaxed">{tx.about_p1}</p>
             <p className="text-gray-600 text-lg leading-relaxed">{tx.about_p2}</p>
             <p className="text-gray-600 text-lg leading-relaxed">
@@ -70,7 +72,7 @@ const AboutUs = () => {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-md"
+              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-green-500/30 hover:-translate-y-0.5"
             >
               {tx.about_cta} <ArrowRight className="w-4 h-4" />
             </Link>

@@ -41,6 +41,9 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // Fix #7 — "Get Started" scrolls to tools on homepage, goes to tools section
+  const isHome = pathname === "/";
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -125,12 +128,22 @@ const Navbar = () => {
             <span className={lang === "en" ? "text-green-400" : "text-white/50"}>A</span>
           </button>
 
-          <Link
-            href="/about"
-            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-green-500/30"
-          >
-            {lang === "en" ? "Get Started" : "शुरू करें"}
-          </Link>
+          {/* Fix #7 — scroll to tools on home, link to home#tools otherwise */}
+          {isHome ? (
+            <ScrollLink
+              to="toolsSection" smooth duration={600} offset={-70}
+              className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-green-500/30 cursor-pointer"
+            >
+              {lang === "en" ? "Explore Tools" : "टूल्स देखें"}
+            </ScrollLink>
+          ) : (
+            <Link
+              href="/#toolsSection"
+              className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-white text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-green-500/30"
+            >
+              {lang === "en" ? "Explore Tools" : "टूल्स देखें"}
+            </Link>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -166,7 +179,6 @@ const Navbar = () => {
             )
           )}
 
-          {/* Mobile region select */}
           <div>
             <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Region</p>
             <div className="flex flex-wrap gap-2">
@@ -195,13 +207,23 @@ const Navbar = () => {
               <span className="text-white/30">/</span>
               <span className={lang === "en" ? "text-green-400" : "text-white/50"}>A</span>
             </button>
-            <Link
-              href="/about"
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 bg-green-500 text-white text-center font-semibold px-5 py-2 rounded-full"
-            >
-              {lang === "en" ? "Get Started" : "शुरू करें"}
-            </Link>
+            {isHome ? (
+              <ScrollLink
+                to="toolsSection" smooth duration={600} offset={-70}
+                onClick={() => setMenuOpen(false)}
+                className="flex-1 bg-green-500 text-white text-center font-semibold px-5 py-2 rounded-full cursor-pointer"
+              >
+                {lang === "en" ? "Explore Tools" : "टूल्स देखें"}
+              </ScrollLink>
+            ) : (
+              <Link
+                href="/#toolsSection"
+                onClick={() => setMenuOpen(false)}
+                className="flex-1 bg-green-500 text-white text-center font-semibold px-5 py-2 rounded-full"
+              >
+                {lang === "en" ? "Explore Tools" : "टूल्स देखें"}
+              </Link>
+            )}
           </div>
         </div>
       )}

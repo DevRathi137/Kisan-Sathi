@@ -1,5 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import Model from "@/components/Model";
+import HomeAboutStrip from "@/components/HomeAboutStrip";
 
 export const metadata = {
   title: "KisanSathi — AI-Powered Smart Agriculture",
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <HeroSection />
       <Model />
+      <HomeAboutStrip />
     </>
   );
 }
