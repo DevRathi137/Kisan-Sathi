@@ -47,7 +47,7 @@ const Footer = () => {
                 </svg>
                 GitHub
               </a>
-              <span className="text-white/20 text-xs">Built with Next.js &amp; AI</span>
+              {/* <span className="text-white/20 text-xs">Built with Next.js &amp; AI</span> */}
             </div>
           </div>
 
