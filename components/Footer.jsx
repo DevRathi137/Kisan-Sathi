@@ -37,7 +37,7 @@ const Footer = () => {
             </blockquote>
             <div className="flex items-center gap-3">
               <a
-                href="https://github.com/DevRathi137/Kisan-Sathi"
+                href="https://github.com/DevRathi137"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white/60 hover:text-white text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200"
