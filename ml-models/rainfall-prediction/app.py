@@ -15,6 +15,9 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     #MainMenu, footer, header { visibility: hidden; }
+    .stAppToolbar, [data-testid="stToolbar"], [data-testid="stDecoration"],
+    .viewerBadge_container__r5tak, .styles_viewerBadge__CvC9N,
+    #stDecoration { display: none !important; }
     .stApp { background: #f0f4ff; }
 
     .hero {
