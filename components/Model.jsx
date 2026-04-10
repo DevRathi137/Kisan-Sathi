@@ -9,10 +9,10 @@ import { useLang } from "@/context/LanguageContext";
 import t from "@/context/translations";
 
 const toolPaths = [
-  { url: "https://kisan-sathi.streamlit.app/?embed=true",                           internal: false },
-  { url: "https://kisan-sathi-water.streamlit.app/?embed=true",                     internal: false },
-  { url: "/weather",                                                                 internal: true  },
-  { url: "https://kisan-sathi-fertilizer-recommendation.streamlit.app/?embed=true", internal: false },
+  { url: "https://kisan-sathi.streamlit.app/?embed=true&embed_options=hide_footer",                           internal: false },
+  { url: "https://kisan-sathi-water.streamlit.app/?embed=true&embed_options=hide_footer",                     internal: false },
+  { url: "/weather",                                                                                           internal: true  },
+  { url: "https://kisan-sathi-fertilizer-recommendation.streamlit.app/?embed=true&embed_options=hide_footer", internal: false },
 ];
 
 const toolIcons  = [Sprout, Droplets, CloudRain, FlaskConical];
